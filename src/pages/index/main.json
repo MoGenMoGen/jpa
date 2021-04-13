@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText":"嘉平安",
+  "navigationStyle": "custom",
+  "onReachBottomDistance": 150,
+  "enablePullDownRefresh": true,
+  "backgroundColor":"#e6e6e6",
+  "backgroundTextStyle":"dark"
+}

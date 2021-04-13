@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText":"任务",
+  "navigationBarBackgroundColor":"#FFFFFF",
+  "navigationBarTextStyle":"black",
+  "onReachBottomDistance": 150,
+  "enablePullDownRefresh": true
+}

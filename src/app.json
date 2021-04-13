@@ -1,0 +1,53 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/login/index/main",
+    "pages/my/index/main",
+    "pages/my/myInfo/main",
+    "pages/my/password/main",
+    "pages/my/company/main",
+    "pages/my/position/main",
+    "pages/my/detail/main",
+    "pages/video/newsdetail/main",
+    "pages/task/index/main",
+    "pages/task/detail/main",
+    "pages/task/pubDetail/main",
+    "pages/task/publish/main",
+    "pages/task/approve/main",
+    "pages/task/new/main",
+    "pages/task/examine/main",
+    "pages/login/register/main",
+    "pages/task/object/main",
+    "pages/wxDetail/main",
+    "pages/my/support/main",
+    "pages/loading/main",
+    "pages/my/integral/main",
+    "pages/video/index/main",
+    "pages/video/detail/main",
+    "pages/activity/index/main",
+    "pages/activity/answer/main",
+    "pages/activity/result/main",
+    "pages/activity/ranking/main",
+    "pages/activity/vote/main",
+    "pages/activity/voteIndex/main",
+    "pages/activity/voteRanking/main",
+    "pages/activity/note/main",
+    "pages/activity/question/main"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
+  "usingComponents": {
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black",
+    "backgroundColor":"#f7f7f7",
+    "withShareTicket":true
+  },
+  "navigateToMiniProgramAppIdList":["wxdd3bf929dde9ec2d"]
+}

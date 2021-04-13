@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText":"发布任务",
+  "navigationBarBackgroundColor":"#FFFFFF",
+  "navigationBarTextStyle":"black",
+  "onReachBottomDistance": 150,
+  "enablePullDownRefresh": true
+}

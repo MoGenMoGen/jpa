@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText":"学习积分",
+  "navigationBarBackgroundColor":"#FFFFFF",
+  "navigationBarTextStyle":"black",
+  "onReachBottomDistance": 150,
+  "enablePullDownRefresh": true
+}

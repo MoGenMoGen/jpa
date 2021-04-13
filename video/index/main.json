@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText":"精彩推荐",
+  "navigationBarBackgroundColor":"#FFFFFF",
+  "navigationBarTextStyle":"black",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 150
+
+}
