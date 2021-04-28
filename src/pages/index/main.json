@@ -1,8 +1,8 @@
 {
-  "navigationBarTitleText":"嘉平安",
+  "navigationBarTitleText": "嘉兴市政法平安宣传矩阵",
   "navigationStyle": "custom",
   "onReachBottomDistance": 150,
   "enablePullDownRefresh": true,
-  "backgroundColor":"#e6e6e6",
-  "backgroundTextStyle":"dark"
+  "backgroundColor": "#e6e6e6",
+  "backgroundTextStyle": "dark"
 }

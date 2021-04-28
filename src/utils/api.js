@@ -6,9 +6,9 @@ Vue.prototype.store = store.store;
 const app = getApp()
 
 const hostUrl = config.serverURL;
-function get(url, data, header,loading) {
+function get(url, data, header, loading) {
   // console.log(url)
-  if(loading){
+  if (loading) {
     wx.showLoading({
       title: "加载中"
     });
@@ -28,32 +28,32 @@ function get(url, data, header,loading) {
     wx.request({
       data: myData,
       method: "get",
-      header:{
+      header: {
         // "Content-Type": "application/x-www-form-urlencoded",
         "yui3-token": token
       },
       url: config.serverURL + url,
-      success: function(res) {
+      success: function (res) {
         wx.hideLoading();
         if (res.data.code == 0) {
           resolve(res.data);
-        } else if(res.data.code == 401){
+        } else if (res.data.code == 401) {
           wx.removeStorageSync('token')
-            wx.showModal({
-              title: '提示',
-              content: '登录失效了，重新登录',
-              success (res) {
-                if (res.confirm) {
-                  wx.reLaunch({url:'/pages/login/index/main'})
-                } else if (res.cancel) {
-                  wx.navigateBack()
-                }
+          wx.showModal({
+            title: '提示',
+            content: '登录失效了，重新登录',
+            success(res) {
+              if (res.confirm) {
+                wx.reLaunch({ url: '/pages/login/index/main' })
+              } else if (res.cancel) {
+                wx.navigateBack()
               }
-            })
-        }else {
+            }
+          })
+        } else {
           console.log(url)
           console.log(url.indexOf('infoByMob'))
-          if(url.indexOf('infoByMob')===-1){
+          if (url.indexOf('infoByMob') === -1) {
             wx.showToast({
               icon: "none",
               title: res.data.msg,
@@ -64,7 +64,7 @@ function get(url, data, header,loading) {
           // reject(res.data)
         }
       },
-      fail: function(err) {
+      fail: function (err) {
         wx.showToast({
           icon: "none",
           title: JSON.stringify(err),
@@ -72,7 +72,7 @@ function get(url, data, header,loading) {
         });
         reject(err);
       },
-      complete: function() {}
+      complete: function () { }
     });
   });
   return promise;
@@ -87,29 +87,29 @@ function post(url, data, header) {
     let token = wx.getStorageSync('yui3-token')
     wx.request({
       data: data,
-      header:{
+      header: {
         "yui3-token": token
       },
       method: "post",
       url: config.serverURL + url,
-      success: function(res) {
+      success: function (res) {
         wx.hideLoading();
         if (res.data.code == 0) {
           resolve(res.data);
-        }  else if(res.data.code == 401){
+        } else if (res.data.code == 401) {
           wx.removeStorageSync('yui3-token')
           wx.showModal({
             title: '提示',
             content: '登录失效了，重新登录',
-            success (res) {
+            success(res) {
               if (res.confirm) {
-                wx.reLaunch({url:'/pages/login/index/main'})
+                wx.reLaunch({ url: '/pages/login/index/main' })
               } else if (res.cancel) {
                 wx.navigateBack()
               }
             }
           })
-        }else {
+        } else {
 
           wx.showToast({
             icon: "none",
@@ -119,7 +119,7 @@ function post(url, data, header) {
           // reject(res.data.msg)
         }
       },
-      fail: function(err) {
+      fail: function (err) {
         wx.showToast({
           icon: "none",
           title: JSON.stringify(err),
@@ -127,7 +127,7 @@ function post(url, data, header) {
         });
         // reject(err)
       },
-      complete: function() {}
+      complete: function () { }
     });
   });
   return promise;
@@ -137,16 +137,16 @@ class api {
   //登录
   login(data) {
     return new Promise((resolve, reject) => {
-      get("/wxMa/access/loginUser",data).then(res => {
-        wx.setStorageSync('userId',res.data.userInfo.subId)
+      get("/wxMa/access/loginUser", data).then(res => {
+        wx.setStorageSync('userId', res.data.userInfo.subId)
         resolve(res);
       });
     });
   }
   //注册
-  register(data){
+  register(data) {
     return new Promise(resolve => {
-      post("/general/access/register",data).then(res=>{
+      post("/general/ access/register", data).then(res => {
         resolve(res)
       })
     })
@@ -154,31 +154,31 @@ class api {
   //登出
   logOut(data) {
     return new Promise((resolve, reject) => {
-      get("/general/access/logout",data).then(res => {
+      get("/general/access/logout", data).then(res => {
         resolve(res);
       });
     });
   }
   //保存头像昵称
-  saveInfo(data){
+  saveInfo(data) {
     return new Promise(resolve => {
-      post("/zfw/api/pers/updNickNmAImg",data).then(res=>{
+      post("/zfw/api/pers/updNickNmAImg", data).then(res => {
         resolve(res.data)
       })
     })
   }
   //查看个人信息
-  getUser(){
+  getUser() {
     return new Promise(resolve => {
-      get("/general/auth/getUserInfo").then(res=>{
+      get("/general/auth/getUserInfo").then(res => {
         resolve(res.data)
       })
     })
   }
   //省市区
-  getCity(data){
+  getCity(data) {
     return new Promise(resolve => {
-      get('/sys/api/region/list?query='+data).then(res=>{
+      get('/sys/api/region/list?query=' + data).then(res => {
         resolve(res.data.list)
       })
     })
@@ -186,14 +186,14 @@ class api {
   //查看我的权限
   MyPermit(data) {
     return new Promise((resolve, reject) => {
-      get("/zfw/api/pers/getMyPermit",data).then(res => {
+      get("/zfw/api/pers/getMyPermit", data).then(res => {
         resolve(res);
       });
     });
   }
-  myCompanyDetail(id){
+  myCompanyDetail(id) {
     return new Promise(resolve => {
-      get('/zfw/api/pers/unitBindInfo/'+id).then(res=>{
+      get('/zfw/api/pers/unitBindInfo/' + id).then(res => {
         resolve(res.data)
       })
     })
@@ -201,73 +201,73 @@ class api {
   //我的---单位信息
   myCompany(myId) {
     let id = ''
-    if(myId){
+    if (myId) {
       id = myId
-    }else {
-      id = wx.getStorageSync("userInfo") ? wx.getStorageSync("userInfo").id :  wx.getStorageSync("userId")
+    } else {
+      id = wx.getStorageSync("userInfo") ? wx.getStorageSync("userInfo").id : wx.getStorageSync("userId")
     }
     return new Promise((resolve, reject) => {
-      get("/zfw/api/pers/unitInformation/"+id).then(res => {
+      get("/zfw/api/pers/unitInformation/" + id).then(res => {
         resolve(res);
         console.log('=================')
         console.log(res.data)
-        wx.setStorageSync('userInfo',res.data)
+        wx.setStorageSync('userInfo', res.data)
       });
     });
   }
   //单位绑定
-  unitBind(data){
+  unitBind(data) {
     return new Promise(resolve => {
-      post('/zfw/api/pers/unitBindSubmit',data).then(res=>{
+      post('/zfw/api/pers/unitBindSubmit', data).then(res => {
         resolve(res);
       })
     })
   }
   //政治面貌--数据字典
-  getByCd(cd){
+  getByCd(cd) {
     return new Promise(resolve => {
-      get('/sys/cat/listByPcd?cd='+cd).then(res=>{
+      get('/sys/cat/listByPcd?cd=' + cd).then(res => {
         resolve(res.data.list)
       })
     })
   }
   //我的个人信息修改
-  upd(data){
+  upd(data) {
     return new Promise(resolve => {
-      post("/zfw/api/pers/upd",data).then(res=>{
+      post("/zfw/api/pers/upd", data).then(res => {
         resolve(res)
       })
     })
   }
   //单位列表
-  unitList(data){
+  unitList(data) {
     return new Promise(resolve => {
-      get('/zfw/api/unit/list?query='+data).then(res=>{
+      get('/zfw/api/unit/list?query=' + data).then(res => {
         resolve(res.data.list)
       })
     })
   }
   //注销账号
-  cancel(data){
+  cancel(data) {
     return new Promise(resolve => {
-      post("/zfw/api/pers/cancle",data).then(res=>{
+      post("/zfw/api/pers/cancle", data).then(res => {
         resolve(res)
       })
     })
   }
   //设置新密码
-  password(data){
+  password(data) {
     return new Promise(resolve => {
-      post("/sys/user/wxUpdPassword",data).then(res=>{
+      post("/sys/user/wxUpdPassword", data).then(res => {
         resolve(res)
       })
     })
   }
 
   //完成任务
-  taskPersLink(data){
+  taskPersLink(data) {
     return new Promise(resolve => {
-      post("/zfw/api/taskPersLink/add",data).then(res=>{
+      post("/zfw/api/taskPersLink/add", data).then(res => {
         resolve(res)
       })
     })
@@ -275,7 +275,7 @@ class api {
   //最新任务
   newTask(data) {
     return new Promise((resolve, reject) => {
-      get("/zfw/api/task/pageForFinishNew?query="+data).then(res => {
+      get("/zfw/api/task/pageForFinishNew?query=" + data).then(res => {
         resolve(res);
       });
     });
@@ -283,7 +283,7 @@ class api {
   //已完成任务
   finishTask(data) {
     return new Promise((resolve, reject) => {
-      get("/zfw/api/task/pageForFinishFinish?query="+data).then(res => {
+      get("/zfw/api/task/pageForFinishFinish?query=" + data).then(res => {
         resolve(res);
       });
     });
@@ -291,40 +291,40 @@ class api {
   //超时任务
   overtimeTask(data) {
     return new Promise((resolve, reject) => {
-      get("/zfw/api/task/pageForFinishOutTm?query="+data).then(res => {
+      get("/zfw/api/task/pageForFinishOutTm?query=" + data).then(res => {
         resolve(res);
       });
     });
   }
   //发布任务-发布中
-    publishing(query) {
-      return new Promise((resolve, reject) => {
-        get("/zfw/api/task/pageForAddPubLish?query="+query).then(res => {
-          resolve(res);
-        });
+  publishing(query) {
+    return new Promise((resolve, reject) => {
+      get("/zfw/api/task/pageForAddPubLish?query=" + query).then(res => {
+        resolve(res);
       });
-    }
-    //发布任务 (发布完成、已撤销)
-    publishTask(query) {
-      return new Promise((resolve, reject) => {
-        get("/zfw/api/task/pageForAdd?query="+query).then(res => {
-          resolve(res);
-        });
+    });
+  }
+  //发布任务 (发布完成、已撤销)
+  publishTask(query) {
+    return new Promise((resolve, reject) => {
+      get("/zfw/api/task/pageForAdd?query=" + query).then(res => {
+        resolve(res);
       });
-    }
-    //发布任务时获取组织(树形)
-    orgTree(data) {
-      return new Promise((resolve, reject) => {
-        get("/zfw/api/unit/listTreeNode",data).then(res => {
-          resolve(res.data.list);
-        });
+    });
+  }
+  //发布任务时获取组织(树形)
+  orgTree(data) {
+    return new Promise((resolve, reject) => {
+      get("/zfw/api/unit/listTreeNode", data).then(res => {
+        resolve(res.data.list);
       });
-    }
+    });
+  }
 
-//获取任务轮播图
+  //获取任务轮播图
   banner(query) {
     return new Promise((resolve, reject) => {
-      get("/sys/ad/api/list?query="+query).then(res => {
+      get("/sys/ad/api/list?query=" + query).then(res => {
         resolve(res);
       });
     });
@@ -332,7 +332,7 @@ class api {
   //任务详情查询
   myTask(id) {
     return new Promise((resolve, reject) => {
-      get("/zfw/api/task/infoForFinish/"+id).then(res => {
+      get("/zfw/api/task/infoForFinish/" + id).then(res => {
         resolve(res);
       });
     });
@@ -348,39 +348,39 @@ class api {
   //审核任务
   SHTask(query) {
     return new Promise((resolve, reject) => {
-      get("/zfw/api/task/pageForAudit?query="+query).then(res => {
+      get("/zfw/api/task/pageForAudit?query=" + query).then(res => {
         resolve(res);
       });
     });
   }
   //审批任务详情
-  SHTaskDetail(id){
+  SHTaskDetail(id) {
     return new Promise(resolve => {
-      get('/zfw/api/task/infoForAudit/'+id).then(res=>{
+      get('/zfw/api/task/infoForAudit/' + id).then(res => {
         resolve(res.data)
       })
     })
   }
   //审批任务通过
-  SHTackExam(data){
+  SHTackExam(data) {
     return new Promise(resolve => {
-      post('/zfw/api/task/auditYes',data).then(res=>{
+      post('/zfw/api/task/auditYes', data).then(res => {
         resolve(res)
       })
     })
   }
   //审批任务不通过
-  SHTackExamNo(data){
+  SHTackExamNo(data) {
     return new Promise(resolve => {
-      post('/zfw/api/task/auditNo',data).then(res=>{
+      post('/zfw/api/task/auditNo', data).then(res => {
         resolve(res)
       })
     })
   }
   //审批任务撤销
-  SHTackExamCancel(data){
+  SHTackExamCancel(data) {
     return new Promise(resolve => {
-      post('/zfw/api/task/cancel',data).then(res=>{
+      post('/zfw/api/task/cancel', data).then(res => {
         resolve(res)
       })
     })
@@ -392,9 +392,9 @@ class api {
     }
     wx.setClipboardData({
       data: text,
-      success: function(res) {
+      success: function (res) {
         wx.getClipboardData({
-          success: function(res) {
+          success: function (res) {
             wx.showToast({
               title: "复制成功"
             });
@@ -404,7 +404,7 @@ class api {
     });
   }
   //操作手册
-  czsc(){
+  czsc() {
     return new Promise((resolve, reject) => {
       get("/sys/api/param/getValByKey?key=operation_manual").then(res => {
         resolve(res.data);
@@ -412,7 +412,7 @@ class api {
     });
   }
   //操作手册导航栏
-  dhcz(){
+  dhcz() {
     return new Promise((resolve, reject) => {
       get("/sys/api/param/getValByKey?key=show_new_video").then(res => {
         resolve(res.data);
@@ -427,29 +427,29 @@ class api {
       });
     });
   }
-//  查询新闻列表
+  //  查询新闻列表
   getNewsList(data) {
     return new Promise((resolve, reject) => {
-      get("/zfw/api/news/page?query="+data).then(res => {
+      get("/zfw/api/news/page?query=" + data).then(res => {
         resolve(res);
       });
     });
   }
-  getNewsDtl(id){
+  getNewsDtl(id) {
     return new Promise((resolve, reject) => {
-      get("/zfw/api/news/info/"+id).then(res => {
+      get("/zfw/api/news/info/" + id).then(res => {
         resolve(res);
       });
     });
   }
 
   //图片选择
-  chooseImages(type,max) {
+  chooseImages(type, max) {
     wx.setStorage({
-      key:"ifClose",
-      data:'no'
+      key: "ifClose",
+      data: 'no'
     })
-    let promise = new Promise((resolve,reject)=> {
+    let promise = new Promise((resolve, reject) => {
       let that = this
       wx.chooseImage({
         // count: max || 9,           //一次最多可以选择的图片张数
@@ -475,7 +475,7 @@ class api {
     return promise
   }
   //上传操作
-  async upLoad(imgPath){
+  async upLoad(imgPath) {
     let token = wx.getStorageSync('yui3-token')
     // if(!token){
     //   token = await getToken2()
@@ -492,33 +492,33 @@ class api {
           "Content-Type": "multipart/form-data",
           "yui3-token": token
         },
-        success: function(res) {
+        success: function (res) {
           console.log('================')
           console.log(res)
           let img = JSON.parse(res.data).data
 
           resolve(img)
         },
-        fail: function(res) {
+        fail: function (res) {
 
           wx.showModal({
             title: '错误提示',
             content: res.msg,
             showCancel: false,
-            success: function(res) {
+            success: function (res) {
             }
           })
         },
-        complete: function() {
+        complete: function () {
           wx.hideLoading();
         }
       });
     })
   }
-//  视频推荐列表
+  //  视频推荐列表
   getRecmmondList(data) {
     return new Promise((resolve, reject) => {
-      get("/zfw/api/news/videoRecommend?query="+data).then(res => {
+      get("/zfw/api/news/videoRecommend?query=" + data).then(res => {
         resolve(res);
       });
     });
@@ -531,18 +531,18 @@ class api {
       });
     });
   }
-//发布任务(保存)
-  savePubTask(data){
+  //发布任务(保存)
+  savePubTask(data) {
     return new Promise(resolve => {
-      post("/zfw/api/task/save",data).then(res=>{
+      post("/zfw/api/task/save", data).then(res => {
         resolve(res)
       })
     })
   }
   //发布任务(发布)
-  addPubTask(data){
+  addPubTask(data) {
     return new Promise(resolve => {
-      post("/zfw/api/task/add",data).then(res=>{
+      post("/zfw/api/task/add", data).then(res => {
         resolve(res)
       })
     })
@@ -550,7 +550,7 @@ class api {
   //发布任务详情
   myPubTask(id) {
     return new Promise((resolve, reject) => {
-      get("/zfw/api/task/info/"+id).then(res => {
+      get("/zfw/api/task/info/" + id).then(res => {
         resolve(res.data);
       });
     });
@@ -558,7 +558,7 @@ class api {
   //发布任务统计
   finishCount(data) {
     return new Promise((resolve, reject) => {
-      get("/zfw/api/task/finishCount",data).then(res => {
+      get("/zfw/api/task/finishCount", data).then(res => {
         resolve(res.data);
       });
     });
@@ -566,15 +566,15 @@ class api {
   //积分分页
   getIntegral(data) {
     return new Promise((resolve, reject) => {
-      get("/zfw/api/persScoreLog/page?query="+data).then(res => {
+      get("/zfw/api/persScoreLog/page?query=" + data).then(res => {
         resolve(res);
       });
     });
   }
   // 阅读新闻获得分数
-  postReadNew(data){
+  postReadNew(data) {
     return new Promise(resolve => {
-      post("/zfw/api/persScoreLog/userReadNew",data).then(res=>{
+      post("/zfw/api/persScoreLog/userReadNew", data).then(res => {
         resolve(res)
       })
     })
@@ -582,7 +582,7 @@ class api {
   //操作手册分页列表
   getHelp(data) {
     return new Promise((resolve, reject) => {
-      get("/zfw/api/help/page?query="+data).then(res => {
+      get("/zfw/api/help/page?query=" + data).then(res => {
         resolve(res);
       });
     });
@@ -590,29 +590,29 @@ class api {
   //操作手册详情
   getHelpInfo(id) {
     return new Promise((resolve, reject) => {
-      get('/zfw/api/help/info/'+id).then(res=>{
+      get('/zfw/api/help/info/' + id).then(res => {
         resolve(res);
       });
     });
   }
   //新闻筛选省市区
-  getNewsCity(data){
+  getNewsCity(data) {
     return new Promise(resolve => {
-      get('/zfw/api/newsAddr/list?query='+data).then(res=>{
+      get('/zfw/api/newsAddr/list?query=' + data).then(res => {
         resolve(res.data.list)
       })
     })
   }
   //获取积分
-  getyearScore(data){
+  getyearScore(data) {
     return new Promise(resolve => {
-      get('/zfw/api/persScoreLog/userYearSocre',data).then(res=>{
+      get('/zfw/api/persScoreLog/userYearSocre', data).then(res => {
         resolve(res.data)
       })
     })
   }
   //获取后台项目名称
-  xmmc(){
+  xmmc() {
     return new Promise((resolve, reject) => {
       get("/sys/api/param/getValByKey?key=app_project_name").then(res => {
         resolve(res.data);
@@ -620,9 +620,9 @@ class api {
     });
   }
   //获取投票分页列表
-  getVoteList(query){
+  getVoteList(query) {
     return new Promise((resolve, reject) => {
-      get('/vote/act/api/page?query='+query,'').then(res=>{
+      get('/vote/act/api/page?query=' + query, '').then(res => {
         resolve(res)
       })
     })
@@ -630,23 +630,23 @@ class api {
   //获取投票详情
   getVoteDetail(id) {
     return new Promise((resolve, reject) => {
-      get('/vote/act/api/info/'+id).then(res=>{
+      get('/vote/act/api/info/' + id).then(res => {
         resolve(res);
       });
     });
   }
   //候选人分组列表查询
-  getGroupList(query){
+  getGroupList(query) {
     return new Promise((resolve, reject) => {
-      get('/vote/group/api/list?query='+query,).then(res=>{
+      get('/vote/group/api/list?query=' + query,).then(res => {
         resolve(res)
       })
     })
   }
   //候选人列表查询
-  getWaitList(query){
+  getWaitList(query) {
     return new Promise((resolve, reject) => {
-      get('/vote/waitlist/api/list?query='+query,).then(res=>{
+      get('/vote/waitlist/api/list?query=' + query,).then(res => {
         resolve(res)
       })
     })
@@ -654,31 +654,31 @@ class api {
   //获取投票详情
   getWaitInfo(actId) {
     return new Promise((resolve, reject) => {
-      get('/vote/waitlist/api/stat/'+actId).then(res=>{
+      get('/vote/waitlist/api/stat/' + actId).then(res => {
         resolve(res);
       });
     });
   }
   //排行榜
-  getVoteRanking(query){
+  getVoteRanking(query) {
     return new Promise((resolve, reject) => {
-      get('/vote/waitlist/api/page?query='+query,).then(res=>{
+      get('/vote/waitlist/api/page?query=' + query,).then(res => {
         resolve(res)
       })
     })
   }
   //投票
-  toVote(data){
+  toVote(data) {
     return new Promise(resolve => {
-      post("/vote/vote/vote",data).then(res=>{
+      post("/vote/vote/vote", data).then(res => {
         resolve(res)
       })
     })
   }
   //获取考试/问卷列表
-  getAnswerList(query){
+  getAnswerList(query) {
     return new Promise((resolve, reject) => {
-      get('/ques/topic/apis/page?query='+query,'').then(res=>{
+      get('/ques/topic/apis/page?query=' + query, '').then(res => {
         resolve(res)
       })
     })
@@ -686,63 +686,63 @@ class api {
   //获取答题详情
   getAnswerInfo(id) {
     return new Promise((resolve, reject) => {
-      get('/ques/topic/apis/home/'+id).then(res=>{
+      get('/ques/topic/apis/home/' + id).then(res => {
         resolve(res);
       });
     });
   }
   //查询排行榜
-  getAnswerRanking(query){
+  getAnswerRanking(query) {
     return new Promise((resolve, reject) => {
-      get('/ques/answerStat/apis/ranking?query='+query,).then(res=>{
+      get('/ques/answerStat/apis/ranking?query=' + query,).then(res => {
         resolve(res)
       })
     })
   }
   //获取题目
-  getAnswer(data){
+  getAnswer(data) {
     return new Promise((resolve, reject) => {
-      get('/ques/question/apis/listByTopic',data).then(res=>{
+      get('/ques/question/apis/listByTopic', data).then(res => {
         resolve(res)
       })
     })
   }
   //提交答案
-  postAnswer(data,duration){
+  postAnswer(data, duration) {
     return new Promise((resolve) => {
-      post("/ques/answer/apis/answer?duration="+duration,data).then(res => {
+      post("/ques/answer/apis/answer?duration=" + duration, data).then(res => {
         resolve(res)
       });
     });
   }
   //获取排行榜
-  getRanking(data){
+  getRanking(data) {
     return new Promise((resolve, reject) => {
-      get('/ques/answerStat/apis/rankingByPers?query='+data).then(res=>{
+      get('/ques/answerStat/apis/rankingByPers?query=' + data).then(res => {
         resolve(res)
       })
     })
   }
   //获取问卷列表
-  getAnswerNotes(query){
+  getAnswerNotes(query) {
     return new Promise((resolve, reject) => {
-      get('/ques/answerStat/apis/pageAnswerStat?query='+query,).then(res=>{
+      get('/ques/answerStat/apis/pageAnswerStat?query=' + query,).then(res => {
         resolve(res)
       })
     })
   }
   //获取题目
-  getQuestion(data){
+  getQuestion(data) {
     return new Promise((resolve, reject) => {
-      get('/ques/question/apis/listByTopicWJ',data).then(res=>{
+      get('/ques/question/apis/listByTopicWJ', data).then(res => {
         resolve(res)
       })
     })
   }
   //提交问卷
-  postQuestion(data,duration){
+  postQuestion(data, duration) {
     return new Promise((resolve) => {
-      post("/ques/answer/apis/answerWJ?duration="+duration,data).then(res => {
+      post("/ques/answer/apis/answerWJ?duration=" + duration, data).then(res => {
         resolve(res)
       });
     });
@@ -750,7 +750,7 @@ class api {
   //获得用户上次获得本单位地址接口
   getAddr(topicId) {
     return new Promise((resolve, reject) => {
-      get('/ques/answer/apis/getTopicAnswerAddr/'+topicId).then(res=>{
+      get('/ques/answer/apis/getTopicAnswerAddr/' + topicId).then(res => {
         resolve(res);
       });
     });
