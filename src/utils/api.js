@@ -151,6 +151,16 @@ class api {
       })
     })
   }
+  //获取归属单位
+  Attributionunit(data){
+    return new Promise(resolve => {
+      get('/zfw/api/unit/list?query=' + data).then(res => {
+        // resolve(res.data.list)
+        resolve(res)
+
+      })
+    })  
+  }
   //登出
   logOut(data) {
     return new Promise((resolve, reject) => {

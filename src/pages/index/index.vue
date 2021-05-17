@@ -6,7 +6,7 @@
     @touchmove="touchMove"
   >
     <!--标题以及下拉框-->
-    <frames @select="updateCity"></frames>
+    <frames ></frames>
     <!--      <span></span><p>浙江社会治理融媒云手机版</p>-->
     <!--首页导航栏-->
     <div
@@ -15,7 +15,7 @@
     >
       <p
         v-for="(item, index) in navList"
-        :key="item.id"
+        :key="index"
         @click="changeActive(item, index)"
         :class="{ red: cd == item.cd }"
       >
@@ -225,6 +225,16 @@ export default {
       });
       wx.removeStorageSync("ifShow");
     }
+    this.list2 = [];
+    if(wx.getStorageSync("userInfo").updatedunitAddrCd)
+    this.list2.push(wx.getStorageSync("userInfo").updatedunitAddrCd);
+    else
+    this.list2.push(wx.getStorageSync("userInfo").unitAddrCd);
+
+      // console.log('this.list2',this.list2)
+      this.pageNo = 1;
+      this.newsList = [];
+      this.getList();
   },
   onPullDownRefresh() {
     // 初始化页码

@@ -1,0 +1,66 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "个人中心",
+          "pathName": "pages/my/index/main",
+          "query": "id= 4763992372564992",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/product/search/main",
+          "pathName": "pages/product/search/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/order/list/main",
+          "pathName": "pages/order/list/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/product/detail/main",
+          "pathName": "pages/product/detail/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/myIntegral/main",
+          "pathName": "pages/my/myIntegral/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/address/list/main",
+          "pathName": "pages/address/list/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/message/list/main",
+          "pathName": "pages/message/list/main",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

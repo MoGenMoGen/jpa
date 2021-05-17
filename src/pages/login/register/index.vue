@@ -113,6 +113,8 @@ export default {
   },
   async onShow() {
     this.getxmmc();
+    this.getAttributionunit(encodeURIComponent({}))
+
   },
   onShareAppMessage(res) {
     return {
@@ -147,6 +149,11 @@ export default {
     async getxmmc() {
       let data = await this.api.xmmc();
       this.titleName = data;
+    },
+    //获取归属单位
+    async getAttributionunit(parms){
+      let data=await this.api.Attributionunit(parms)
+      console.log("归属单位",data);
     },
     register() {
       let news = this.reg.checkPhone(Number(this.info.mob));

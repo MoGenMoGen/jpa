@@ -11,14 +11,16 @@
       }"
     >
       <div class="leftBox">
-        <span @click="show_pro()"
-          >{{ listCity
-          }}<img
+        <span>
+          <img mode="widthFix" src="../../static/my/myaddr2.png" alt="" />
+          {{ listCity }}
+          <!-- <img
             v-if="type == true"
             src="../../static/images/dropdown1.png" /><img
             v-else
             src="../../static/images/dropdown.png"
-        /></span>
+        /> -->
+        </span>
         <p>{{ titleName }}</p>
         <!--        <p>平安鼎</p>-->
       </div>
@@ -37,7 +39,6 @@
           class="text"
           v-for="(item, index) in list"
           :key="index"
-          @click="select(item)"
         >
           <img
             v-if="item.choose == false"
@@ -123,42 +124,54 @@ export default {
     this.getxmmc();
   },
   async onShow() {
-    // this.getData();
+    this.getData();
   },
   methods: {
     async getData() {
-      let qry = this.query.new();
-      this.query.toO(qry, "sort", "asc");
-      let data = await this.api.getNewsCity(
-        encodeURIComponent(this.query.toJsonStr(qry))
-      );
-      this.list = data;
-      this.list.forEach((item) => {
-        this.$set(item, "choose", true);
-      });
-      if (!wx.getStorageSync("userInfo").unitAddrCd) {
-        this.list.forEach((item) => {
-          item.choose = true;
-          if (item.pidId == 0) {
-            this.listCity = item.nm;
-          }
-        });
-      } else {
-        this.list.forEach((item) => {
-          if (wx.getStorageSync("userInfo").unitAddrCd == item.addrCd) {
-            item.choose = true;
-            this.listCity = item.nm;
-          } else {
-            item.choose = false;
-            if (item.pidId == 0) {
-              this.listCity = item.nm;
-            }
-          }
-        });
-        this.list2 = [];
-        this.list2.push(wx.getStorageSync("userInfo").unitAddrCd);
-        this.$emit("select", this.list2);
+      if (!wx.getStorageSync("userInfo").nm)
+      {
+        this.listCity = "嘉兴市";
+        console.log("nm",wx.getStorageSync("userInfo").nm);
       }
+      
+      else 
+      {
+      this.listCity = wx.getStorageSync("userInfo").nm;
+      console.log("else",wx.getStorageSync("userInfo").nm);
+      }
+      // let qry = this.query.new();
+      // this.query.toO(qry, "sort", "asc");
+      // let data = await this.api.getNewsCity(
+      //   encodeURIComponent(this.query.toJsonStr(qry))
+      // );
+      // console.log("getdata", data);
+      // this.list = data;
+      // this.list.forEach((item) => {
+      //   this.$set(item, "choose", true);
+      // });
+      // if (!wx.getStorageSync("userInfo").unitAddrCd) {
+      //   this.list.forEach((item) => {
+      //     item.choose = true;
+      //     if (item.pidId == 0) {
+      //       this.listCity = item.nm;
+      //     }
+      //   });
+      // } else {
+      //   this.list.forEach((item) => {
+      //     if (wx.getStorageSync("userInfo").unitAddrCd == item.addrCd) {
+      //       item.choose = true;
+      //       this.listCity = item.nm;
+      //     } else {
+      //       item.choose = false;
+      //       if (item.pidId == 0) {
+      //         this.listCity = item.nm;
+      //       }
+      //     }
+      //   });
+      //   this.list2 = [];
+      //   this.list2.push(wx.getStorageSync("userInfo").unitAddrCd);
+      //   this.$emit("select", this.list2);
+      // }
     },
     async getxmmc() {
       let data = await this.api.xmmc();
@@ -215,23 +228,23 @@ export default {
   text-align: center;
   > p {
     color: #ffffff;
-    font-size: 33rpx;
+    font-size: 30rpx;
     /*padding-left: 30rpx;*/
-    width: 60vw;
+    width: 50vw;
     text-align: center;
   }
   > span {
+    margin-top: -1rpx;
     color: #ffffff;
-    width: 20vw;
+    width: 22vw;
     font-size: 30rpx;
     padding-left: 20rpx;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     > img {
-      width: 22rpx;
-      height: 10rpx;
-      margin-left: 5rpx;
+      width: 30rpx;
+      margin-right: 7rpx;
     }
   }
 }

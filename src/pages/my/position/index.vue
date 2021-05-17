@@ -5,21 +5,21 @@
       <li>
         <p>归属单位</p>
         <span>|</span>
-        <input type="text" v-model="info.unit"/>
-        <button @click="toPage('/pages/my/detail/main')">修改</button>
+        <input type="text" v-model="info.unit" disabled/>
+        <!-- <button @click="toPage('/pages/my/detail/main')">修改</button> -->
         <p class="position" v-if="info.status==10">等待"{{info.nextUnit}}"管理员审核</p>
       </li>
       <li>
         <p>职务名称</p>
         <span>|</span>
-        <input type="text" v-model="info.post"/>
-        <button @click="show_pro(0)">修改</button>
+        <input type="text" v-model="info.post" disabled/>
+        <!-- <button @click="show_pro(0)">修改</button> -->
       </li>
       <li>
         <p>政治面貌</p>
         <span>|</span>
-        <input type="text" v-model="info.politicsStatus"/>
-        <button @click="show_pro(1)">修改</button>
+        <input type="text" v-model="info.politicsStatus" disabled/>
+        <!-- <button @click="show_pro(1)">修改</button> -->
       </li>
     </ul>
   </div>

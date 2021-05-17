@@ -346,10 +346,10 @@ export default {
           height: 100%;
           img {
             border-radius: 110rpx;
-            width: 726rpx;
+            width: 100%;
             height: 336rpx;
-            position: absolute;
-            top: -12rpx;
+            margin: -12rpx auto 0;
+          
           }
         }
       }
