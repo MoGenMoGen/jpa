@@ -270,7 +270,14 @@ export default {
   components: {
     tab123,
   },
-  async onLoad() {},
+  async onLoad() {
+    Object.assign(this.$data, this.$options.data())
+    if(wx.getStorageSync("myAddr").nm)
+    {
+    this.info.myaddr=wx.getStorageSync("myAddr").nm
+console.log("2222",this.info.myaddr);
+    }
+  },
   onShareAppMessage(res) {
     return {
       title: "个人中心",
@@ -300,6 +307,7 @@ export default {
     this.getCompany();
     this.getMyPermit();
     this.getArea();
+
   },
   methods: {
     err(e) {
@@ -332,13 +340,22 @@ export default {
       console.log("obj", obj);
       this.api.upd(JSON.stringify(obj));
       // 不同区域首页显示不同内容
-      let userInfo = wx.getStorageSync("userInfo");
-      userInfo.updatedunitAddrCd = this.info.Addressarea[this.index3].addrCd;
-      userInfo.nm = this.info.Addressarea[this.index3].nm;
-      wx.setStorageSync("userInfo", userInfo);
+      // let userInfo = wx.getStorageSync("userInfo");
+      // userInfo.updatedunitAddrCd = this.info.Addressarea[this.index3].addrCd;
+      // userInfo.nm = this.info.Addressarea[this.index3].nm;
+      // wx.setStorageSync("userInfo", userInfo);
+      let myAddr = {
+        nm: this.info.Addressarea[this.index3].nm,
+        cd: this.info.Addressarea[this.index3].addrCd
+      }
+      wx.setStorage({
+        key: "myAddr",
+        data: myAddr
+      })
     },
     // 获取所有区域信息
     async getArea() {
+      console.log("1111111111");
       let qry = this.query.new();
       this.query.toO(qry, "sort", "asc");
       let data = await this.api.getNewsCity(
@@ -378,7 +395,7 @@ export default {
     //查询我的单位个人信息
     async getCompany() {
       let data = await this.api.myCompany();
-      this.info = data.data;
+      this.info ={...this.info,...data.data}
       // status: "状态 (-2：已注销，0：待提交，10：待审批，20：审批通过，30：审批不通过)"
       if (this.info.status == -2) {
         this.status = "已注销";

@@ -226,8 +226,8 @@ export default {
       wx.removeStorageSync("ifShow");
     }
     this.list2 = [];
-    if(wx.getStorageSync("userInfo").updatedunitAddrCd)
-    this.list2.push(wx.getStorageSync("userInfo").updatedunitAddrCd);
+    if(wx.getStorageSync("myAddr").cd)
+    this.list2.push(wx.getStorageSync("myAddr").cd);
     else
     this.list2.push(wx.getStorageSync("userInfo").unitAddrCd);
 

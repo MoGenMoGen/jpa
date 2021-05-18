@@ -128,16 +128,16 @@ export default {
   },
   methods: {
     async getData() {
-      if (!wx.getStorageSync("userInfo").nm)
+      if (!wx.getStorageSync("myAddr").nm)
       {
         this.listCity = "嘉兴市";
-        console.log("nm",wx.getStorageSync("userInfo").nm);
+        console.log("nm",wx.getStorageSync("myAddr").nm);
       }
       
       else 
       {
-      this.listCity = wx.getStorageSync("userInfo").nm;
-      console.log("else",wx.getStorageSync("userInfo").nm);
+      this.listCity = wx.getStorageSync("myAddr").nm;
+      console.log("else",wx.getStorageSync("myAddr").nm);
       }
       // let qry = this.query.new();
       // this.query.toO(qry, "sort", "asc");
@@ -234,7 +234,6 @@ export default {
     text-align: center;
   }
   > span {
-    margin-top: -1rpx;
     color: #ffffff;
     width: 22vw;
     font-size: 30rpx;
@@ -243,6 +242,7 @@ export default {
     display: flex;
     align-items: center;
     > img {
+    margin-top: 1rpx;
       width: 30rpx;
       margin-right: 7rpx;
     }
