@@ -66,11 +66,7 @@
           </div>
         </div>
         <!-- 普通排列-->
-        <div
-          class="sort2"
-          v-if="cd != 'top' && showType == 10"
-          v-for="(item, index) in newsList"
-          :key="index"
+        <div class="sort2" v-if="cd != 'top' && showType == 10" v-for="(item, index) in newsList" :key="index"
           @click="toDetail(item)"
         >
           <div>
@@ -124,6 +120,7 @@ import frames from "../../components/frames.vue";
 export default {
   data() {
     return {
+      
       no1,
       no2,
       no3,

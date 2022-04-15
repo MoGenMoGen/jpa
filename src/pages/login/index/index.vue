@@ -138,8 +138,7 @@ export default {
 .home {
   /*height: 100vh;*/
   width: 100vw;
-  background-image: url("
-http://jiapingan.oss-cn-hangzhou.aliyuncs.com/b8891568dde74452bf5f836d635266f6.png");
+  background-image: url("http://jiapingan.oss-cn-hangzhou.aliyuncs.com/b8891568dde74452bf5f836d635266f6.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   .title {
